@@ -27,12 +27,14 @@ const authSlice = createSlice({
 
 export const {loginSuccess, logoutSuccess} = authSlice.actions
 
-export const login = (email, password) => async (dispatch) =>{
+export const login = (email, password,navigate) => async (dispatch) =>{
     const navigate = useNavigate()
 
     try {
+
         
-        const res = await axios.get("")
+        // const res = await axios.get("http://localhost:8000/users")
+
         const adminData = email==='admin@gmail.com' && password==='12345';
         const findData = res.data.find((item)=> item.email ===email && item.password===password)
         const exitData = res.data.find((item)=> item.email === email && item.password !==password)

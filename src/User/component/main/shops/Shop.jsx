@@ -2,13 +2,20 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Navbar from "../../../navbar/NavbarLink"; 
 import Footer from "../../../Pages/footers/Footer";  
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../../../app/Slice/cartSlice/cartSlice";
 // import { AuthContext } from "../../../AuthContext/AuthContext";
 
 function Shop() {
   const [products, setProducts] = useState([]);
   const [searchItem, setSearchItem] = useState("");
   const [category, setCategory] = useState("");
-  const { addToCart, isLoggedIn } = useContext(AuthContext);
+  // const { addToCart, isLoggedIn } = useContext(AuthContext);
+
+
+  const dispatch = useDispatch();
+
+  const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn)
 
   useEffect(() => {
     axios.get("http://localhost:3031/products")
@@ -26,7 +33,8 @@ function Shop() {
 
   const handleAddToCart = (product) => {
     if (isLoggedIn) {
-      addToCart(product);
+      dispatch(addToCart(product))
+      // addToCart(product);
     } else {
       alert('Please loging.');
     }

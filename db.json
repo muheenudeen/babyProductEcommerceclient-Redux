@@ -107,6 +107,16 @@
       "confirmPassword": "An@11111",
       "cart": [],
       "order": []
+    },
+    {
+      "id": "f5e0",
+      "fname": "mueen",
+      "sname": "mueen",
+      "email": "mueennn@gmail.com",
+      "password": "Mu@11111",
+      "confirmPassword": "Mu@11111",
+      "cart": [],
+      "order": []
     }
   ]
 }
