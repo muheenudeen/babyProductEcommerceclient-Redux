@@ -14,10 +14,10 @@ const authSlice = createSlice({
     reducers:{
         loginSuccess : (state, action) =>{
             state.isLoggedIn = true;
-            state.userId = action.payload
+            state.userId = action.payload;
         },
 
-        logoutSuccess : (state,action) =>{
+        logoutSuccess : (state) =>{
             state.isLoggedIn = false;
             state.userId=""
             localStorage.removeItem("id")
@@ -28,12 +28,12 @@ const authSlice = createSlice({
 export const {loginSuccess, logoutSuccess} = authSlice.actions
 
 export const login = (email, password,navigate) => async (dispatch) =>{
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     try {
 
         
-        // const res = await axios.get("http://localhost:8000/users")
+        const res = await axios.get("http://localhost:8000/users")
 
         const adminData = email==='admin@gmail.com' && password==='12345';
         const findData = res.data.find((item)=> item.email ===email && item.password===password)

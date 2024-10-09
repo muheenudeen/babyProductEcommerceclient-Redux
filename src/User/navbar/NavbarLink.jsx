@@ -15,7 +15,7 @@ const Navbar = ({ onSearch }) => {
 
   const navigate = useNavigate()
 
-  const {isLoggedIn, userId} = useSelector((state)=>state.auth)
+  const {isLoggedIn, user} = useSelector((state)=>state.auth)
 const cart = useSelector((state) => state.cart?.items || [])
 
 
