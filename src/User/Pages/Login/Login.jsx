@@ -2,11 +2,13 @@
 import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
-import { AuthContext } from '../../AuthContext/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../../../app/Slice/authSlice/authSlice';
 
 const Login = () => {
-  const { login } = useContext(AuthContext);
+const dispatch = useDispatch();
+const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -19,7 +21,7 @@ const Login = () => {
     }),
     onSubmit: (values) => {
       const { email, password } = values;
-      login(email, password);
+       dispatch(login(email, password, navigate))
     }
   });
 

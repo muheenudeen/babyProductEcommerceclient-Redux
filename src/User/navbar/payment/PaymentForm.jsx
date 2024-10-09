@@ -1,14 +1,22 @@
 import axios from 'axios';
-import React, { useContext, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AuthContext } from '../../AuthContext/AuthContext';
+import { useDispatch,useSelector } from 'react-redux';
+import { addOrder,fetchOrders } from '../../../app/Slice/orderSlice/orderSlice';
+
 
 const PaymentForm = () => {
     const location = useLocation();
     const { state } = location;
     const { amount, orderDetails } = state || { amount: 0, orderDetails: [] };
-    const { order } = useContext(AuthContext)
+    
+
+    const order = useSelector((state)=>state.order)
     const id = localStorage.getItem(`id`)
+
+    const dispatch= useDispatch();
+
+
     const [formData, setFormData] = useState({
         firstName: '',
         location: '',
@@ -17,33 +25,51 @@ const PaymentForm = () => {
         cvv: '',
         amount: amount
     });
-    // console.log(order);
-    const [toAdd, setToAdd] = useState([]);
 
-    const paymentData = (payment) => {
-        const dataToPost = [
-            ...payment,
+    useEffect(()=>{
+        if(status === 'idle') {
+            dispatch(fetchOrders())
+        }
+
+    },[status, dispatch]);
+
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    };
+
+    // console.log(order);
+    // const [toAdd, setToAdd] = useState([]);
+
+    // const paymentData = (payment) => {
+        const newOrder = {
+            ...formData,
             orderDetails
-        ];
+        };
         // console.log(paymentData);
-        const allorder = [order, dataToPost]
-        console.log(allorder);
-        axios.patch(`http://localhost:8000/users/${id}`, { order: allorder })
-            .then(response => {
-                setToAdd([...toAdd, response.data]);
+        // const allorder = [...order, dataToPost]
+
+        // console.log(allorder);
+
+        axios.patch(`http://localhost:8000/users/${id}`, { order: newOrder })
+            // .then(response => {
+            //     setToAdd([...toAdd, response.data]);
+            //     alert('Payment successful');
+            //     dispatch()
+            // })
+            .then(() => {
                 alert('Payment successful');
+                dispatch(addOrder(newOrder));
             })
-            .catch(error => console.log(error));
-    }
+
+
+            .catch(error => console.log('payment error',error));
+    
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        paymentData(formData);
-    };
 
     return (
         <div className="max-w-md mx-auto p-6 bg-white rounded shadow-md">

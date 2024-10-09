@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../../navbar/NavbarLink";
 import Footer from "../../../Pages/footers/Footer";
-import { AuthContext } from "../../../AuthContext/AuthContext";
+// import { AuthContext } from "../../../AuthContext/AuthContext";
 // import UserModal from '../componants/modal/UserModal';
 
 

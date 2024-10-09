@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Navbar from "../../../navbar/NavbarLink"; 
 import Footer from "../../../Pages/footers/Footer";  
-import { AuthContext } from "../../../AuthContext/AuthContext";
+// import { AuthContext } from "../../../AuthContext/AuthContext";
 
 function Shop() {
   const [products, setProducts] = useState([]);

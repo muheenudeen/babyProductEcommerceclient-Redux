@@ -1,15 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../AuthContext/AuthContext';
-import axios from 'axios';
+import { useDispatch,useSelector } from 'react-redux';
+import { logout } from '../../app/Slice/authSlice/authSlice';
+
 
 const Navbar = ({ onSearch }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchItem, setSearchItem] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { isLoggedIn, logout, cart, user } = useContext(AuthContext);
+
+
+  const dispatch = useDispatch();
+  
 
   const navigate = useNavigate()
+
+  const {isLoggedIn, userId} = useSelector((state)=>state.auth)
+const cart = useSelector((state) => state.cart?.items || [])
+
+
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -35,7 +44,7 @@ const Navbar = ({ onSearch }) => {
   };
 
   const handleLogout = () => {
-    logout();
+  dispatch(logout());
     closeModal();
   };
 

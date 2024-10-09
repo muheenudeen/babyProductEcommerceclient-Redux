@@ -15,7 +15,15 @@ export const fetchOrders = createAsyncThunk('order/fetchOrders', async () =>{
 const orderSlice = createSlice ({
     name:'order',
     initialState,
-    reducers:{},
+    reducers:{
+
+        addOrder: (state, action) => {
+            state.order.push(action.payload); // Add the new order to the existing orders
+        },
+        clearOrders: (state) => {
+            state.order = []; // Clear all orders
+        },
+    },
     extraReducers: (builder)=>{
         builder
         .addCase(fetchOrders.pending, (state) =>{
@@ -30,5 +38,7 @@ const orderSlice = createSlice ({
         })
     }
 })
+
+export const {addOrder,clearOrders} = orderSlice.actions
 
 export default orderSlice.reducer
