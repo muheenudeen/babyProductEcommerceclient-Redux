@@ -1,11 +1,20 @@
 import React, { useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-// import { AuthContext } from '../../../User/AuthContext/AuthContext';
+import { logout } from '../../../app/Slice/authSlice/authSlice';
+//  import { AuthContext } from '../../../User/AuthContext/AuthContext';
 
 
 function Admin() {
-  const { isLoggedIn, logout} = useContext(AuthContext);
+  // const { isLoggedIn, logout} = useContext(AuthContext);
 
+const dispatch = useDispatch();
+
+const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn)
+
+const handleLogout = () =>{
+  dispatch(logout())
+}
   return (
     <div className="w-full bg-white shadow-md">
       <div className="p-4 flex items-center justify-between">
@@ -47,7 +56,7 @@ function Admin() {
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWQNJtFsdtSeo-E-UPrgxU8qkQGISaSjCjXg&s"
               alt="Profile"
               className="w-10 h-10 rounded-full cursor-pointer"
-              onClick={logout}
+              onClick={handleLogout}
             />
           ) : (
             <Link to="/">

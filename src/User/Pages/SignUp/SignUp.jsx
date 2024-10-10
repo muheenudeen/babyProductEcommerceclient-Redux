@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import 'tailwindcss/tailwind.css';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import api from '../../../../utis/axios';
+
 
 function SignUp() {
   const [notification, setNotification] = useState('');
@@ -13,14 +14,14 @@ function SignUp() {
       sname: "",
       email: "",
       password: "",
-      confirmPassword: "",
+     confirmPassword: "",
       cart:[],
       order:[]
     },
     onSubmit: async (values, { resetForm }) => {
       try {
-        const response = await axios.post('http://localhost:8000/users', values);
-        if (response.status === 201) {
+        const response = await api.post('/user/signup', values);
+        if (response.status === 200) {
           setNotification('Signup successful!');
           resetForm();
           setTimeout(() => {
@@ -35,10 +36,10 @@ function SignUp() {
       let errors = {};
 
       if (!values.fname) {
-        errors.fname = 'Required';
+        
       }
       if (!values.sname) {
-        errors.sname = 'Required';
+       
       }
       if (!values.email) {
         errors.email = 'Required';
