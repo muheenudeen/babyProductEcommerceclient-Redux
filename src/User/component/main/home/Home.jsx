@@ -7,10 +7,10 @@ function Home() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    api.get("/user/products") // Ensure the path is correct and prefixed with /api
+    api.get("/user/products") 
       .then((response) => {
         if (response.data.success) {
-          setProducts(response.data.data); // Access response data properly
+          setProducts(response.data.data); 
         } else {
           console.error(response.data.message);
         }
