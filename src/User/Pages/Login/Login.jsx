@@ -1,13 +1,14 @@
-// src/components/Login.js
+
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../../../app/Slice/authSlice/authSlice';
 import React from 'react';
+
 const Login = () => {
-const dispatch = useDispatch();
-const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -20,7 +21,7 @@ const navigate = useNavigate();
     }),
     onSubmit: (values) => {
       const { email, password } = values;
-       dispatch(login(email, password,navigate ))
+      dispatch(login(email, password, navigate));
     }
   });
 

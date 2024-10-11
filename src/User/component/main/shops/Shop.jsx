@@ -4,6 +4,7 @@ import Navbar from "../../../navbar/NavbarLink";
 import Footer from "../../../Pages/footers/Footer";  
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../../../app/Slice/cartSlice/cartSlice";
+import api from "../../../../../utis/axios";
 // import { AuthContext } from "../../../AuthContext/AuthContext";
 
 function Shop() {
@@ -18,9 +19,9 @@ function Shop() {
   const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn)
 
   useEffect(() => {
-    axios.get("http://localhost:3031/products")
+    api.get("/user/products")
       .then((response) => {
-        setProducts(response.data);
+        setProducts(response.data.data);
       })
       .catch((error) => {
         console.error("There was an error fetching the product data!", error);
