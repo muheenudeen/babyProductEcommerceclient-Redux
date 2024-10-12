@@ -2,9 +2,9 @@ import React, { useState } from "react";
 
 const AddModal = ({show, onClose, onAdd}) =>{
     const [newProduct,setNewProduct] =useState({
-        name:'',
-        description:'',
-        url:'',
+        title:'',
+        category:'',
+        imageSrc:'',
         price:''
     })
 
@@ -31,25 +31,25 @@ const AddModal = ({show, onClose, onAdd}) =>{
             <h2 className="text-xl font-bold mb-4">Add New Product</h2>
             <input
                 type="text"
-                name="name"
+                name="title"
                 placeholder="Product Name"
-                value={newProduct.name}
+                value={newProduct.title}
                 onChange={handleChange}
                 className="w-full mb-2 p-2 border rounded"
             />
             <input
                 type="text"
-                name="description"
-                placeholder="Description"
-                value={newProduct.description}
+                name="category"
+                placeholder="category"
+                value={newProduct.category}
                 onChange={handleChange}
                 className="w-full mb-2 p-2 border rounded"
             />
             <input
                 type="text"
-                name="url"
+                name="imageSrc"
                 placeholder="Image URL"
-                value={newProduct.url}
+                value={newProduct.imageSrc}
                 onChange={handleChange}
                 className="w-full mb-2 p-2 border rounded"
             />

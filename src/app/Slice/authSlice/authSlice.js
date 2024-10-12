@@ -1,10 +1,12 @@
-
 import { createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 import api from "../../../../utis/axios";
+
+// Initialize the state with values from localStorage
 const initialState = {
-  isLoggedIn: false,
-  userId: localStorage.getItem('id') || "",};
+  isLoggedIn: !!localStorage.getItem("token"), // Set true if token exists
+  userId: localStorage.getItem("id") || "",
+};
 
 const authSlice = createSlice({
   name: "auth",
@@ -18,6 +20,7 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
       state.userId = "";
       localStorage.removeItem("id");
+      localStorage.removeItem("token"); // Remove token when logging out
     },
   },
 });
@@ -29,24 +32,24 @@ export const login = (email, password, navigate) => async (dispatch) => {
     const res = await api.post("/user/login", { email, password });
     const userData = res.data.data;
 
-    if (userData.role === 'admin') {
-      toast.success('Welcome admin');
-      localStorage.setItem('id', userData._id);
-      localStorage.setItem('token', res.data.token);
+    if (userData.role === "admin") {
+      toast.success("Welcome admin");
+      localStorage.setItem("id", userData._id);
+      localStorage.setItem("token", res.data.token);
       dispatch(loginSuccess(userData._id));
       setTimeout(() => navigate("/adminhome"), 1000);
     } else if (userData.isBlocked) {
       toast.error("You are blocked");
     } else {
-      toast.success('Login successful');
-      localStorage.setItem('id', userData._id);
-      localStorage.setItem('token', res.data.token);
+      toast.success("Login successful");
+      localStorage.setItem("id", userData._id);
+      localStorage.setItem("token", res.data.token);
       dispatch(loginSuccess(userData._id));
       setTimeout(() => navigate("/"), 1000);
     }
   } catch (error) {
     if (error.response?.status === 401) {
-      toast.error('Incorrect password');
+      toast.error("Incorrect password");
     } else if (error.response?.status === 400) {
       toast.error("No user found. Please create a new account.");
       setTimeout(() => navigate("/signup"), 1000);
@@ -59,6 +62,7 @@ export const login = (email, password, navigate) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
   localStorage.removeItem("token");
+  localStorage.removeItem("id"); // Ensure all auth info is removed
   dispatch(logoutSuccess());
 };
 

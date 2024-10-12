@@ -1,96 +1,4 @@
 
-// // cartSlice.js
-
-// import { createSlice } from "@reduxjs/toolkit";
-// import toast from "react-hot-toast";
-// import api from "../../../../utis/axios";
-
-// const initialState = {
-//   cart: [],
-//   status: 'idle',
-// };
-
-// const cartSlice = createSlice({
-//   name: 'cart',
-//   initialState,
-//   reducers: {
-//     addToCart: (state, action) => {
-//       const productExists = state.cart.some((item) => item.id === action.payload.id);
-//       if (productExists) {
-//         toast.error('This product is already in the cart');
-//       } else {
-//         state.cart.push({ ...action.payload, quantity: 1 });
-//         toast.success('Product added to cart');
-//       }
-//     },
-//     removeFromCart: (state, action) => {
-//       state.cart = state.cart.filter((item) => item.id !== action.payload);
-//     },
-//     incrementQuantity: (state, action) => {
-//       const product = state.cart.find((item) => item.id === action.payload);
-//       if (product) {
-//         product.quantity++;
-//       }
-//     },
-//     decrementQuantity: (state, action) => {
-//       const product = state.cart.find((item) => item.id === action.payload);
-//       if (product && product.quantity > 1) {
-//         product.quantity--;
-//       }
-//     },
-//     setCart: (state, action) => {
-//       state.cart = action.payload;
-//     },
-//   },
-// });
-
-// export const { addToCart, removeFromCart, incrementQuantity, decrementQuantity, setCart } = cartSlice.actions;
-
-// export const fetchCart = (userId) => async (dispatch) => {
-//   try {
-//     const token = localStorage.getItem("token");
-//     const response = await api.get("/user/cart/:id",{userId}, {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
-//     if (response.data.success) {
-//       dispatch(setCart(response.data.data.products));
-//     } else {
-//       console.error(response.data.message);
-//     }
-//   } catch (error) {
-//     console.error("There was an error fetching the cart data!", error);
-//   }
-// };
-
-// export const addProductToCart = (userId, productId) => async (dispatch) => {
-//   try {
-//     const token = localStorage.getItem("token");
-//     const response = await api.post("/user/cart/:id",{userId},
-//       { productId: productId.id, quantity: 1 },
-//       {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       }
-//     );
-//     if (response.data.success) {
-//       dispatch(addToCart(productId));
-//     } else {
-//       toast.error(response.data.message);
-//     }
-//   } catch (error) {
-//     toast.error("Error adding product to cart!");
-//   }
-// };
-
-// export default cartSlice.reducer;
-
-
-
-
-
 import { createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 import api from "../../../../utis/axios";
@@ -157,9 +65,8 @@ export const fetchCart = (userId) => async (dispatch) => {
 export const addProductToCart = (userId, productId) => async (dispatch) => {
   try {
     const token = localStorage.getItem("token");
-    const response = await api.post(
-      `/user/cart/${userId}`,
-      { productId },
+    const response = await api.post(`/user/cart/${userId}`,
+      { productId, quantity: 1 },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -167,10 +74,12 @@ export const addProductToCart = (userId, productId) => async (dispatch) => {
       }
     );
     if (response.data.success) {
-      dispatch(fetchCart(userId)); // Fetch updated cart data
+      dispatch(addToCart(productId));
+    } else {
+      toast.error(response.data.message);
     }
   } catch (error) {
-    console.error("There was an error adding the product to the cart!", error);
+    toast.error("Error adding product to cart!");
   }
 };
 

@@ -16,7 +16,7 @@ const handleLogout = () =>{
   dispatch(logout())
 }
   return (
-    <div className="w-full bg-white shadow-md">
+    <div className="w-full bg-amber-100 shadow-md">
       <div className="p-4 flex items-center justify-between">
         <img
           width="106"

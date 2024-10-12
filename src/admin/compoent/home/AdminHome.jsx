@@ -1,47 +1,53 @@
+
 import React, { useEffect, useState } from 'react';
 import Admin from '../navbarAdmin/Admin';
-import axios from 'axios';
+import api from '../../../../utis/axios';
 
 function AdminHome() {
   const [products, setProducts] = useState([]);
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3031/products")
+    api.get("/user/products")
       .then(res => {
-        setProducts(res.data);
+        if (res.data.success) {
+          setProducts(res.data.data);
+        } else {
+          console.error(res.data.message);
+        }
       })
       .catch(err => {
-        console.error(err);
+        console.error("There was an error fetching the product data!", err);
       });
   }, []);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/users")
+    api.get("/admin/users")
       .then(res => {
-        setUsers(res.data);
+        if (res.data.success) {
+          setUsers(res.data.data);
+        } else {
+          console.error("Error fetching users:", res.data.message);
+        }
       })
       .catch(err => {
         console.error(err);
       });
   }, []);
 
-  // const subTotalOrders = users.reduce((total, user) => {
-  //   return total + (user.orders ? user.orders.length : 0);
-  // }, 0);
-
   return (
     <>
       <Admin />
-      <div className="bg-amber-100 p-4 min-h-screen flex flex-col items-center justify-center">
+      <div className="bg-white min-h-screen flex flex-col items-center p-12">
         <div className="w-full max-w-4xl">
-          <div className="bg-white p-4 mb-4 rounded shadow-md hover:shadow-lg transition-shadow">
-            <p className="text-xl font-semibold">Total Users: {users.length}</p>
-            <p className="text-xl font-semibold">Total Products: {products.length}</p>
+          {/* Total Users Section */}
+          <div className="bg-blue-100 p-8 mb-12 rounded shadow-md hover:shadow-lg transition-shadow">
+            <p className="text-xl font-semibold text-center">Total Users: {users.length}</p>
           </div>
-          {/* <div className="bg-white p-4 mb-4 rounded shadow-md hover:shadow-lg transition-shadow">
-            <p className="text-xl font-semibold">Sub Total Orders: {subTotalOrders}</p>
-          </div> */}
+          {/* Total Products Section */}
+          <div className="bg-green-100 p-8 mb-4 rounded shadow-md hover:shadow-lg transition-shadow">
+            <p className="text-xl font-semibold text-center">Total Products: {products.length}</p>
+          </div>
         </div>
       </div>
     </>

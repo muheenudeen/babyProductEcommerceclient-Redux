@@ -1,18 +1,23 @@
-import axios from 'axios';
+
+
 import React, { useEffect, useState } from 'react';
 import UserModal from '../componants/modal/UserModal';
 import Admin from '../navbarAdmin/Admin';
 import { toast } from 'react-hot-toast';
-
+import api from '../../../../utis/axios';
 const Userlist = () => {
   const [list, setList] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/users')
-      .then(res => setList(res.data))
-      .catch(error => console.log(error));
+    api.get('/admin/users') 
+      .then((res) => {
+        if (res.data.success) {
+          setList(res.data.data);
+        }
+      })
+      .catch((error) => console.error('Error fetching users:', error));
   }, []);
 
   const handleRowClick = (user) => {
@@ -25,18 +30,21 @@ const Userlist = () => {
     setSelectedUser(null);
   };
 
+  
   const handleBlockUser = (userId) => {
     const updatedList = list.map(user => 
       user.id === userId ? { ...user, isBlocked: !user.isBlocked } : user
     );
     setList(updatedList);
 
-    axios.patch(`http://localhost:8000/users/${userId}`, { isBlocked: !list.find(user => user.id === userId).isBlocked })
+    api.patch(`/admin/users/${userId}`, { isBlocked: !list.find(user => user.id === userId).isBlocked })
       .then(() => {
         toast.success(`User ${list.find(user => user.id === userId).isBlocked ? 'unblocked' : 'blocked'}`);
       })
       .catch(error => console.log(error));
   };
+
+
 
   return (
     <>
