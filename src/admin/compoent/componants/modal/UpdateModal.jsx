@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 const UpdateModal = ({ show, onClose, product, onUpdate }) => {
-  const [url, setUrl] = useState(product ? product.url : '');
-  const [description, setDescription] = useState(product ? product.description : '');
+  const [imageSrc, setImageSrc] = useState(product ? product.imageSrc : '');
+  const [title, setTitle] = useState(product ? product.title : '');
   const [price, setPrice] = useState(product ? product.price : '');
 
   if (!show) {
@@ -12,8 +12,8 @@ const UpdateModal = ({ show, onClose, product, onUpdate }) => {
   const handleSubmit = () => {
     onUpdate({
       ...product,
-      url,
-      description,
+      imageSrc,
+      title,
       price
     });
     onClose();
@@ -27,17 +27,17 @@ const UpdateModal = ({ show, onClose, product, onUpdate }) => {
             URL:
             <input
               type="text"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
+              value={imageSrc}
+              onChange={(e) => setImageSrc(e.target.value)}
               className="border p-2 w-full"
             />
           </label>
           <label className="block mb-2">
-            Description:
+            <title></title>:
             <input
               type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               className="border p-2 w-full"
             />
           </label>

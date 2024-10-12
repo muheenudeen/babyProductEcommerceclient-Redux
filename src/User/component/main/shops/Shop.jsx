@@ -21,6 +21,7 @@ function Shop() {
   useEffect(() => {
     api.get("/user/products")
       .then((response) => {
+        if(response.data.success)
         setProducts(response.data.data);
       })
       .catch((error) => {
@@ -65,10 +66,10 @@ function Shop() {
           // </div>
 
           <div key={product.id || product.name + product.price} className="p-4 bg-white rounded-lg shadow-lg">
-  <img src={product.url} className="w-full h-48 object-cover rounded-t-lg" alt={product.description} />
+  <img src={product.imageSrc} className="w-full h-48 object-cover rounded-t-lg" alt={product.description} />
   <div className="p-2">
-    <p className="text-lg font-semibold">{product.description}</p>
-    <p>{product.name}</p>
+    <p className="text-lg font-semibold">{product.title}</p>
+    <p>{product.category}</p>
     <p className="text-gray-700">${product.price}</p>
     <button onClick={() => handleAddToCart(product)} className="bg-blue-950 text-white p-3 rounded-2xl mt-4">
       Add to cart

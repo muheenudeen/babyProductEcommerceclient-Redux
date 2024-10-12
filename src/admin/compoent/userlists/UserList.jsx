@@ -1,17 +1,18 @@
 
-
 import React, { useEffect, useState } from 'react';
 import UserModal from '../componants/modal/UserModal';
 import Admin from '../navbarAdmin/Admin';
 import { toast } from 'react-hot-toast';
 import api from '../../../../utis/axios';
+
 const Userlist = () => {
   const [list, setList] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    api.get('/admin/users') 
+    // Fetching the list of users
+    api.get('/admin/users')
       .then((res) => {
         if (res.data.success) {
           setList(res.data.data);
@@ -30,21 +31,26 @@ const Userlist = () => {
     setSelectedUser(null);
   };
 
-  
+  // Function to block/unblock user
   const handleBlockUser = (userId) => {
-    const updatedList = list.map(user => 
-      user.id === userId ? { ...user, isBlocked: !user.isBlocked } : user
-    );
-    setList(updatedList);
+    const user = list.find((user) => user._id === userId); // Find user in the list
 
-    api.patch(`/admin/users/${userId}`, { isBlocked: !list.find(user => user.id === userId).isBlocked })
-      .then(() => {
-        toast.success(`User ${list.find(user => user.id === userId).isBlocked ? 'unblocked' : 'blocked'}`);
+    api.put(`/admin/users/${userId}`) // API request to toggle block/unblock
+      .then((res) => {
+        if (res.data.success) {
+          const updatedList = list.map((user) =>
+            user._id === userId ? { ...user, isBlocked: res.data.newStatus } : user
+          );
+          setList(updatedList); // Update the list state
+          const action = res.data.newStatus ? 'blocked' : 'unblocked';
+          toast.success(`User ${action} successfully!`);
+        }
       })
-      .catch(error => console.log(error));
+      .catch((error) => {
+        toast.error('Error updating user status');
+        console.log(error);
+      });
   };
-
-
 
   return (
     <>
@@ -62,12 +68,15 @@ const Userlist = () => {
           </thead>
           <tbody>
             {list.map((item) => (
-              <tr 
-                key={item.id} 
-                className="border-b border-gray-300 hover:bg-gray-50 text-center"
-              >
+              <tr
+                key={item._id}
+                className="border-b border-gray-300 hover:bg-gray-50 text-center">
                 <td className="py-4 px-6">
-                  <img src="src/assets/download.jpeg" alt="" className="h-12 w-12 rounded-full mx-auto"/>
+                  <img
+                    src="src/assets/download.jpeg"
+                    alt=""
+                    className="h-12 w-12 rounded-full mx-auto"
+                  />
                 </td>
                 <td className="py-4 px-6 text-gray-800">{item.fname}</td>
                 <td className="py-4 px-6 text-gray-800">{item.email}</td>
@@ -75,17 +84,17 @@ const Userlist = () => {
                   {/* Placeholder for orders */}
                 </td>
                 <td className="py-4 px-6 flex justify-center space-x-4">
-                  <button 
-                    className="bg-yellow-500 text-white py-2 px-4 rounded-md font-semibold mr-20 hover:bg-yellow-600 text-center" 
+                  <button
+                    className="bg-yellow-500 text-white py-2 px-4 rounded-md font-semibold mr-20 hover:bg-yellow-600 text-center"
                     onClick={() => handleRowClick(item)}
                   >
                     View Order
                   </button>
-                  <button 
-                    className="bg-red-500 text-white py-2 px-4 rounded-md font-semibold hover:bg-red-600" 
-                    onClick={() => handleBlockUser(item.id)}
+                  <button
+                    className="bg-red-500 text-white py-2 px-4 rounded-md font-semibold hover:bg-red-600"
+                    onClick={() => handleBlockUser(item._id)}
                   >
-                    {item.isBlocked ? 'Unblock' : 'Block'}
+                    {item.isBlocked ? 'Block' : 'unblock'}
                   </button>
                 </td>
               </tr>
@@ -93,10 +102,10 @@ const Userlist = () => {
           </tbody>
         </table>
         {selectedUser && (
-          <UserModal 
-            isOpen={isModalOpen} 
-            onClose={handleCloseModal} 
-            user={selectedUser} 
+          <UserModal
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+            user={selectedUser}
           />
         )}
       </div>

@@ -44,9 +44,9 @@ function Home() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-stone-100">
         {products.map((product) => (
           <div key={product._id} className="p-4 bg-white rounded-lg shadow-lg ">
-            <img src={product.url} className="w-full h-48 object-cover rounded-t-lg" alt={product.description} />
+            <img src={product.imageSrc} className="w-full h-48 object-cover rounded-t-lg" alt={product.description} />
             <div className="p-2">
-              <p className="text-lg font-semibold">{product.description}</p>
+              <p className="text-lg font-semibold">{product.title}</p>
               <p className="text-gray-700">${product.price}</p>
             </div>
           </div>
