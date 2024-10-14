@@ -13,7 +13,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const productExists = state.cart.some((item) => item.id === action.payload.id);
+      const productExists = state.cart.some((item) => item.title === action.payload.title);
       if (productExists) {
         toast.error('This product is already in the cart');
       } else {

@@ -2,9 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 import api from "../../../../utis/axios";
 
-// Initialize the state with values from localStorage
+
+
 const initialState = {
-  isLoggedIn: !!localStorage.getItem("token"), // Set true if token exists
+  isLoggedIn: !!localStorage.getItem("token"),
   userId: localStorage.getItem("id") || "",
 };
 
@@ -20,7 +21,9 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
       state.userId = "";
       localStorage.removeItem("id");
-      localStorage.removeItem("token"); // Remove token when logging out
+      localStorage.removeItem("token"); 
+
+      
     },
   },
 });

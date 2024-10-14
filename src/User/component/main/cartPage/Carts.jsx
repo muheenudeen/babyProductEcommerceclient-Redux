@@ -3,13 +3,22 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../../../navbar/NavbarLink";
 import Footer from "../../../Pages/footers/Footer";
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { fetchCart } from "../../../../app/Slice/cartSlice/cartSlice";
 
-import { removeFromCart, incrementQuantity, decrementQuantity,addToCart } from "../../../../app/Slice/cartSlice/cartSlice";
+import { removeFromCart, incrementQuantity, decrementQuantity } from "../../../../app/Slice/cartSlice/cartSlice";
 
 const Carts = () => {
   const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId"); // Assuming you have userId in localStorage
+    if (userId) {
+      dispatch(fetchCart(userId));
+    }
+  }, [dispatch]);
 
   const totalAmount = cart.reduce(
     (total, product) => total + product.price * product.quantity,
@@ -67,15 +76,15 @@ const Carts = () => {
                   <div className="w-20">
                     <img
                       className="h-24"
-                      src={product.url}
+                      src={product.imageSrc}
                       alt={product.description}
                     />
                   </div>
                   <div className="flex flex-col justify-between ml-4 flex-grow">
                     <span className="font-bold text-sm">
-                      {product.description}
+                      {product.title}
                     </span>
-                    <span className="text-red-500 text-xs">{product.name}</span>
+                    <span className="text-red-500 text-xs">{product.description}</span>
                     <button
                       onClick={() => handleRemove(product.id)}
                       className="font-semibold hover:text-red-500 text-gray-500 text-xs"
