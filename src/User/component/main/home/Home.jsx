@@ -4,8 +4,9 @@ import Navbar from '../../../navbar/NavbarLink';
 import Footer from '../../../Pages/footers/Footer';
 import api from '../../../../../utis/axios';
 function Home() {
-  const [products, setProducts] = useState([]);
+      const [products, setProducts] = useState([]);
 
+      
   useEffect(() => {
     api.get("/user/products") 
       .then((response) => {

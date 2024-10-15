@@ -1,10 +1,12 @@
 
+
+
 import React, { useEffect, useState } from "react";
 import Navbar from "../../../navbar/NavbarLink";
 import Footer from "../../../Pages/footers/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../../../app/Slice/cartSlice/cartSlice";
-import { settingWishList, addToWishListAsync ,removeFromWishListAsync} from "../../../../app/Slice/wishSlice/wishalistSlice";
+import { settingWishList, addToWishListAsync, removeFromWishListAsync } from "../../../../app/Slice/wishSlice/wishalistSlice";
 import WishalistModal from "../../../../admin/compoent/componants/modal/wishalistModal";
 import api from "../../../../../utis/axios";
 
@@ -17,6 +19,7 @@ function Shop() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const wishlistItems = useSelector((state) => state.wishlist.items);
+  const cartItems = useSelector((state) => state.cart.items); // Cart items from Redux store
 
   useEffect(() => {
     api
@@ -62,10 +65,10 @@ function Shop() {
   };
 
   const handleRemoveFromWishlist = (product) => {
-    if(isLoggedIn){
-      dispatch(removeFromWishListAsync(product))
-    }else{
-      alert("Please login and remove product from wishlist")
+    if (isLoggedIn) {
+      dispatch(removeFromWishListAsync(product));
+    } else {
+      alert("Please login and remove product from wishlist");
     }
   };
 
@@ -75,18 +78,31 @@ function Shop() {
     return matchesSearch && matchesCategory;
   });
 
+  const wishlistCount = wishlistItems?.length || 0; // Wishlist count
+  // const cartCount = cartItems?.length || 0; // Cart count
+
   return (
     <>
       <Navbar onSearch={handleSearchChange} />
-      <button onClick={handleShowWishlist} className="bg-blue-600 text-white p-2 rounded mt-6 mb-6">
-        Show Wishlist
-      </button>
+
+      <div className="flex justify-end mr-4 mt-6">
+        <button onClick={handleShowWishlist} className="relative text-blue-600">
+          <img
+            src="src/assets/favourite.png"
+            className="w-[50px] h-[50px] mb-3"
+            alt="Wishlist"
+          />
+          {wishlistCount > 0 && (
+            <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+              {wishlistCount}
+            </span>
+          )}
+        </button>
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-stone-100">
         {filteredProducts.map((product) => {
-          const isInWishlist = wishlistItems?.some(
-            (item) => item.productId._id === product._id
-          );
+          const isInWishlist = wishlistItems?.some(item => item?.productId?._id === product._id);
           return (
             <div key={product._id} className="p-4 bg-white rounded-lg shadow-lg">
               <img
@@ -98,14 +114,15 @@ function Shop() {
                 <p className="text-lg font-semibold">{product.title}</p>
                 <p>{product.category}</p>
                 <p className="text-gray-700">${product.price}</p>
-                <button onClick={() => handleAddToCart(product)} className="bg-blue-950 text-white p-3 rounded-2xl mt-4">
-                Add to cart
-              </button>
+                <button
+                  onClick={() => handleAddToCart(product)}
+                  className="bg-blue-950 text-white p-3 rounded-2xl mt-4"
+                >
+                  Add to cart
+                </button>
                 <button
                   onClick={() => handleAddToWishlist(product)}
-                  className={`p-3 rounded-2xl mt-4 ml-7 ${
-                    isInWishlist ? "bg-blue-500" : "bg-yellow-500"
-                  } text-white`}
+                  className={`p-3 rounded-2xl mt-4 ml-7 ${isInWishlist ? "bg-blue-500" : "bg-yellow-500"} text-white`}
                 >
                   {isInWishlist ? "In Wishlist" : "Add to Wishlist"}
                 </button>
@@ -121,33 +138,19 @@ function Shop() {
           {wishlistItems?.length > 0 ? (
             <ul>
               {wishlistItems.map((item) => (
-                <li key={item.productId._id}         className="flex items-center justify-between p-4 bg-white shadow-md rounded-lg">
-                 
-<div className="flex items-center space-x-4">
-          <img
-            src={item.productId.imageSrc}
-            className="w-24 h-24 object-cover rounded-lg"
-            alt={item.productId.description}
-          />
-          <div>
-            <h3 className="text-lg font-semibold">{item.productId.title}</h3>
-            <p className="text-gray-600">{item.productId.category}</p>
-            <p className="text-blue-500 font-semibold">${item.productId.price}</p>
-          </div>
-        </div>
-
-
-
-                  <button
-                    onClick={() => handleRemoveFromWishlist(item.productId._id)}
-                    className="text-red-600"
-                  >
-                    Remove
-                  </button>
+                <li key={item?.productId?._id} className="flex items-center justify-between p-4 bg-white shadow-md rounded-lg">
+                  <div className="flex items-center space-x-4">
+                    <img src={item?.productId?.imageSrc} className="w-24 h-24 object-cover rounded-lg" alt={item?.productId?.description} />
+                    <div>
+                      <h3 className="text-lg font-semibold">{item?.productId?.title}</h3>
+                      <p className="text-gray-600">{item?.productId?.category}</p>
+                      <p className="text-blue-500 font-semibold">${item?.productId?.price}</p>
+                    </div>
+                  </div>
+                  <button onClick={() => handleRemoveFromWishlist(item?.productId?._id)} className="text-red-600">Remove</button>
                 </li>
               ))}
             </ul>
-            
           ) : (
             <p>Your wishlist is empty.</p>
           )}

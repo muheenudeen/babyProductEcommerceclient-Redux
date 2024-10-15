@@ -1,34 +1,24 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../app/Slice/authSlice/authSlice';
-
 
 const Navbar = ({ onSearch }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchItem, setSearchItem] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-
   const dispatch = useDispatch();
-  
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
+  const { isLoggedIn, user } = useSelector((state) => state.auth);
+  const cart = useSelector((state) => state.cart?.cart || []); // Changed 'items' to 'cart' to align with slice
 
-  const {isLoggedIn, user} = useSelector((state)=>state.auth)
-const cart = useSelector((state) => state.cart?.items || [])
-
-
+  const totalCartQuantity = cart.reduce((total, item) => total + item.quantity, 0);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
-  // useEffect(() => {
-  //   axios.get()
-
-  // }, [])
-
 
   const handleSearchChange = (event) => {
     setSearchItem(event.target.value);
@@ -44,11 +34,9 @@ const cart = useSelector((state) => state.cart?.items || [])
   };
 
   const handleLogout = () => {
-  dispatch(logout());
+    dispatch(logout());
     closeModal();
   };
-
-
 
   return (
     <>
@@ -79,16 +67,22 @@ const cart = useSelector((state) => state.cart?.items || [])
               <option value="toys">Toys</option>
               <option value="powder">Powder</option>
             </select>
+
+           
+            
+
+            
             <Link to="/cart" className="text-white relative">
-              <svg fill="grey" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
+              <svg fill="grey" xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 -960 960 960" width="34px">
                 <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z" />
               </svg>
-              {cart.length > 0 && (
-                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
-                  {cart.length}
+              {totalCartQuantity > 0 && (
+                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                  {totalCartQuantity}
                 </span>
               )}
             </Link>
+
             {isLoggedIn ? (
               <img
                 src={user?.profilePhoto || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWQNJtFsdtSeo-E-UPrgxU8qkQGISaSjCjXg&s"}
@@ -103,6 +97,7 @@ const cart = useSelector((state) => state.cart?.items || [])
                 </button>
               </Link>
             )}
+
             <button onClick={toggleMenu} className="md:hidden text-black focus:outline-none">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -149,7 +144,7 @@ const cart = useSelector((state) => state.cart?.items || [])
                 alt="Profile"
                 className="w-10 h-10 rounded-full"
               />
-              <span>{user?.name || "Thankyou"}</span>
+              <span>{user?.name || "Thank you"}</span>
             </div>
             <div className="mt-6 flex justify-end space-x-4">
               <button
