@@ -36,7 +36,7 @@ function Home() {
             src="https://w0.peakpx.com/wallpaper/586/490/HD-wallpaper-cute-baby-cute-baby.jpg"
             alt="Baby Fashion"
             className="w-full"
-            style={{ height: '120vh' }}
+            style={{ height: '90vh' }}
           />
         </div>
       </div>
