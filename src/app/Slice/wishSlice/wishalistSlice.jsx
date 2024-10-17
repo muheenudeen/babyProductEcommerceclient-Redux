@@ -3,6 +3,8 @@ import toast from "react-hot-toast";
 import api from "../../../../utis/axios";
 
 
+
+
 export const settingWishList = createAsyncThunk(
   "wishlists/settingWishList",
   async (_, { rejectWithValue }) => {
@@ -52,7 +54,7 @@ export const removeFromWishListAsync = createAsyncThunk(
   }
 );
 
-
+   //add
 
 export const addToWishListAsync = createAsyncThunk(
   "wishlists/addToWishListAsync",
@@ -78,7 +80,7 @@ const wishlistSlice = createSlice({
   initialState: { items: [], loading: false, error: null },
   extraReducers: (builder) => {
     builder
-      // Setting wishlist cases
+      
       .addCase(settingWishList.pending, (state) => {
         state.loading = true;
       })
@@ -91,27 +93,26 @@ const wishlistSlice = createSlice({
         state.error = action.payload;
       })
 
-      // Add to wishlist cases
+     
       .addCase(addToWishListAsync.pending, (state) => {
         state.loading = true;
       })
       .addCase(addToWishListAsync.fulfilled, (state, action) => {
         state.loading = false;
-        // Optionally add the product to the state manually after dispatching settingWishList
         state.items.push(action.payload);
       })
-      .addCase(addToWishListAsync.rejected, (state, action) => {
+
+         .addCase(addToWishListAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
 
-      // Clear wishlist cases
       .addCase(removeFromWishListAsync.pending, (state) => {
         state.loading = true;
       })
       .addCase(removeFromWishListAsync.fulfilled, (state) => {
         state.loading = false;
-        state.items = []; // Clear the wishlist
+        state.items = []; 
       })
       .addCase(removeFromWishListAsync.rejected, (state, action) => {
         state.loading = false;

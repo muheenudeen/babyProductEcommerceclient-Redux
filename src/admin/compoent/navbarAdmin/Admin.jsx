@@ -59,7 +59,7 @@ const handleLogout = () =>{
               onClick={handleLogout}
             />
           ) : (
-            <Link to="/">
+            <Link to="/login">
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWQNJtFsdtSeo-E-UPrgxU8qkQGISaSjCjXg&s"
                 alt="Profile"

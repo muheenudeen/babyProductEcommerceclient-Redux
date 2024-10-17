@@ -7,6 +7,7 @@ function Home() {
       const [products, setProducts] = useState([]);
 
       
+
   useEffect(() => {
     api.get("/user/products") 
       .then((response) => {
@@ -23,6 +24,8 @@ function Home() {
 
   return (
     <>
+
+    
       <Navbar />
 
       <div className="flex flex-col lg:flex-row h-screen mt-1 bg-stone-100">
@@ -33,12 +36,7 @@ function Home() {
           <p className="text-xl">Discover the latest trends in baby fashion and nursery essentials.</p>
         </div>
         <div className="flex-1">
-          <img
-            src="https://w0.peakpx.com/wallpaper/586/490/HD-wallpaper-cute-baby-cute-baby.jpg"
-            alt="Baby Fashion"
-            className="w-full"
-            style={{ height: '90vh' }}
-          />
+          <img src="https://w0.peakpx.com/wallpaper/586/490/HD-wallpaper-cute-baby-cute-baby.jpg" alt="Baby Fashion" className="w-full" style={{ height: '90vh' }}/>
         </div>
       </div>
 

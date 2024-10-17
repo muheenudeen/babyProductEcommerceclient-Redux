@@ -120,19 +120,25 @@ const Navbar = ({ onSearch }) => {
         )}
       </nav>
       {isModalOpen && (
+        
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg">
+          <Link to="/login">
             <h2 className="text-xl mb-4">Confirm Logout</h2>
+            </Link>
             <div className="flex items-center space-x-4">
               <img src={user?.profilePhoto || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWQNJtFsdtSeo-E-UPrgxU8qkQGISaSjCjXg&s"} alt="Profile" className="w-10 h-10 rounded-full"/>
               <span>{user?.name || "Thank you"}</span>
             </div>
             <div className="mt-6 flex justify-end space-x-4">
+            
               <button
                 onClick={closeModal} className="bg-gray-500 text-white rounded-full py-2 px-4 hover:bg-gray-600"> Cancel
               </button>
+              <Link to="/login">
               <button onClick={handleLogout}
                 className="bg-red-500 text-white rounded-full py-2 px-4 hover:bg-red-600" >Logout </button>
+                </Link>
             </div>
           </div>
         </div>

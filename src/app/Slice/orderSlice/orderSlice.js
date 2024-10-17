@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../../../../utis/axios";
 
 const initialState ={
     order : [],
@@ -8,7 +8,7 @@ const initialState ={
 
 export const fetchOrders = createAsyncThunk('order/fetchOrders', async () =>{
 
-    const response = await axios.get(`admin/orders/`)
+    const response = await api.get(`admin/orders/`)
     return response.data.order;
 })
 

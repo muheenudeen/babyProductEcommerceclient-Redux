@@ -31,17 +31,17 @@ const Userlist = () => {
     setSelectedUser(null);
   };
 
-  // Function to block/unblock user
+  
   const handleBlockUser = (userId) => {
-    const user = list.find((user) => user._id === userId); // Find user in the list
+    const user = list.find((user) => user._id === userId); 
 
-    api.put(`/admin/users/${userId}`) // API request to toggle block/unblock
+    api.put(`/admin/users/${userId}`) 
       .then((res) => {
         if (res.data.success) {
           const updatedList = list.map((user) =>
             user._id === userId ? { ...user, isBlocked: res.data.newStatus } : user
           );
-          setList(updatedList); // Update the list state
+          setList(updatedList); 
           const action = res.data.newStatus ? 'blocked' : 'unblocked';
           toast.success(`User ${action} successfully!`);
         }

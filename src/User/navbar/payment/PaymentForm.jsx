@@ -5,6 +5,8 @@ import toast from 'react-hot-toast';
 import api from '../../../../utis/axios';
 import { fetchOrders } from '../../../app/Slice/orderSlice/orderSlice';
 
+
+
 const PaymentForm = () => {
     const location = useLocation();
     const { state } = location; 
@@ -24,6 +26,7 @@ const PaymentForm = () => {
         amount: amounts
     });
 
+
     const Subtotal = cart?.reduce((total, product) => {
         if (product?.productId && product.productId.price) {
             return total + product.productId.price * product.quantity;
@@ -36,6 +39,8 @@ const PaymentForm = () => {
     useEffect(() => {
         dispatch(fetchOrders());
     }, [dispatch]);
+
+
 
     useEffect(() => {
         const script = document.createElement('script');
@@ -126,64 +131,28 @@ const PaymentForm = () => {
             <form onSubmit={handleCheckout}>
                 <div className="mb-4">
                     <label className="block text-gray-700 font-medium">First Name</label>
-                    <input
-                        type="text"
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={handleChange}
-                        className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-                        required
-                    />
+                    <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300" required/>
                 </div>
+
 
                 <div className="mb-4">
                     <label className="block text-gray-700 font-medium">Location</label>
-                    <input
-                        type="text"
-                        name="location"
-                        value={formData.location}
-                        onChange={handleChange}
-                        className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-                        required
-                    />
+                    <input type="text" name="location" value={formData.location} onChange={handleChange} className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300" required/>
                 </div>
 
                 <div className="mb-4">
                     <label className="block text-gray-700 font-medium">Phone</label>
-                    <input
-                        type="text"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-                        required
-                    />
+                    <input type="text"  name="phone"  value={formData.phone}  onChange={handleChange}  className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"  required  />
                 </div>
 
                 <div className="mb-4">
                     <label className="block text-gray-700 font-medium">Pincode</label>
-                    <input
-                        type="text"
-                        name="pincode"
-                        value={formData.pincode}
-                        onChange={handleChange}
-                        className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-                        required
-                    />
+                    <input type="text" name="pincode" value={formData.pincode} onChange={handleChange} className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300" required  />
                 </div>
          
-                <button
-                onClick={handleCheckout}
-                    type="submit"
-                    className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300"
-                >
-                    Continue
-                </button>
+                <button onClick={handleCheckout} type="submit" className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300" >  Continue </button>
                
-                <Link
-                    to="/"
-                    className="w-full text-center bg-lime-900 text-white mt-4 py-2 px-4 rounded-lg hover:bg-lime-800 transition duration-300 block"
-                >
+                <Link to="/" className="w-full text-center bg-lime-900 text-white mt-4 py-2 px-4 rounded-lg hover:bg-lime-800 transition duration-300 block"  >
                     To Home
                 </Link>
             </form>

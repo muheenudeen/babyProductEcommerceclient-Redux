@@ -31,22 +31,28 @@ const Carts = () => {
   const handleDecrement = (productId) => {
     dispatch(decrementQuantity(productId));
   };
+  
 
   const handleRemove = (productId) => {
     dispatch(removeFromCart(productId));
   };
+
 
   const handleCheckout = () => {
     navigate("/paymentform", {
       state: { amount: totalAmount, orderDetails: cart },
     });
   };
+
+
 console.log('heloo');
 
 
   return (
     <>
       <Navbar />
+
+
       <div className="container mx-auto mt-10">
         <div className="flex shadow-md my-10">
           <div className="w-full bg-white px-10 py-10">
@@ -60,11 +66,15 @@ console.log('heloo');
               <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center"> Price</h3>
               <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center"> Total</h3>
             </div>
+
+
+
+
             {cart.map((product) => (
 
   <div key={product.id} className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
-    {console.log(product)
-    }
+    
+    
     <div className="flex w-2/5">
       <div className="w-20">
         <img className="h-24" src={product.productId.imageSrc} alt={product.productId.description} />
@@ -104,6 +114,8 @@ console.log('heloo');
               onClick={handleCheckout}
               className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-orange-600"
             >
+
+
               Buy Now
             </button>
           </div>

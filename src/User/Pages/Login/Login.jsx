@@ -31,30 +31,14 @@ const Login = () => {
         <h2 className="text-lg font-bold mb-6">Login</h2>
         <div className="mb-4">
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-          />
+          <input id="email" name="email" type="email" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.email} className="mt-1 block w-full p-2 border border-gray-300 rounded-md" />
           {formik.touched.email && formik.errors.email ? (
             <div className="text-red-600 text-sm">{formik.errors.email}</div>
           ) : null}
         </div>
         <div className="mb-4">
           <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.password}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-          />
+          <input id="password" name="password" type="password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.password} className="mt-1 block w-full p-2 border border-gray-300 rounded-md" />
           {formik.touched.password && formik.errors.password ? (
             <div className="text-red-600 text-sm">{formik.errors.password}</div>
           ) : null}

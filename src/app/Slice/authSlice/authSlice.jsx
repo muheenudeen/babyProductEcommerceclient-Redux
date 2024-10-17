@@ -3,26 +3,33 @@ import toast from "react-hot-toast";
 import api from "../../../../utis/axios";
 
 
-
 const initialState = {
   isLoggedIn: !!localStorage.getItem("token"),
   userId: localStorage.getItem("id") || "",
 };
 
+
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
+
   reducers: {
     loginSuccess: (state, action) => {
       state.isLoggedIn = true;
       state.userId = action.payload;
+      
     },
+
+
     logoutSuccess: (state) => {
       state.isLoggedIn = false;
       state.userId = "";
       localStorage.removeItem("id");
       localStorage.removeItem("token"); 
-
+      
+      
+     
       
     },
   },
@@ -33,11 +40,13 @@ import { createSelector } from 'reselect';
 export const selectCartItems = createSelector(
   (state) => state.cart?.items || [],(items) => items);
 
-// Memoized selector for authentication state
+
 export const selectAuth = createSelector(
   (state) => state.auth,
   (auth) => auth
 );
+
+
 
 
 export const { loginSuccess, logoutSuccess } = authSlice.actions;
@@ -55,6 +64,7 @@ export const login = (email, password, navigate) => async (dispatch) => {
       setTimeout(() => navigate("/adminhome"), 1000);
     } else if (userData.isBlocked) {
       toast.error("You are blocked");
+
     } else {
       toast.success("Login successful");
       localStorage.setItem("id", userData._id);
@@ -62,6 +72,7 @@ export const login = (email, password, navigate) => async (dispatch) => {
       dispatch(loginSuccess(userData._id));
       setTimeout(() => navigate("/"), 1000);
     }
+
   } catch (error) {
     if (error.response?.status === 401) {
       toast.error("Incorrect password");
@@ -75,10 +86,15 @@ export const login = (email, password, navigate) => async (dispatch) => {
   }
 };
 
+
 export const logout = () => (dispatch) => {
   localStorage.removeItem("token");
-  localStorage.removeItem("id"); // Ensure all auth info is removed
+  localStorage.removeItem("id");
+  
   dispatch(logoutSuccess());
+
+ 
 };
+
 
 export default authSlice.reducer;

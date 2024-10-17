@@ -29,51 +29,18 @@ const AddModal = ({show, onClose, onAdd}) =>{
         <div className="fixed inset-0 flex items-center justify-center z-50">
         <div className="bg-white p-6 rounded-lg shadow-lg">
             <h2 className="text-xl font-bold mb-4">Add New Product</h2>
-            <input
-                type="text"
-                name="title"
-                placeholder="Product Name"
-                value={newProduct.title}
-                onChange={handleChange}
-                className="w-full mb-2 p-2 border rounded"
-            />
-            <input
-                type="text"
-                name="category"
-                placeholder="category"
-                value={newProduct.category}
-                onChange={handleChange}
-                className="w-full mb-2 p-2 border rounded"
-            />
-            <input
-                type="text"
-                name="imageSrc"
-                placeholder="Image URL"
-                value={newProduct.imageSrc}
-                onChange={handleChange}
-                className="w-full mb-2 p-2 border rounded"
-            />
-            <input
-                type="number"
-                name="price"
-                placeholder="Price"
-                value={newProduct.price}
-                onChange={handleChange}
-                className="w-full mb-4 p-2 border rounded"
-            />
+
+            
+            <input type="text" name="title" placeholder="Product Name" value={newProduct.title} onChange={handleChange} className="w-full mb-2 p-2 border rounded" />
+            <input type="text" name="category" placeholder="category" value={newProduct.category} onChange={handleChange} className="w-full mb-2 p-2 border rounded"  />
+            <input type="text" name="imageSrc" placeholder="Image URL" value={newProduct.imageSrc} onChange={handleChange} className="w-full mb-2 p-2 border rounded" />
+            <input type="number" name="price" placeholder="Price" value={newProduct.price} onChange={handleChange} className="w-full mb-4 p-2 border rounded"  />
             <div className="flex justify-end">
-                <button
-                    className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded mr-2"
-                    onClick={onClose}
-                >
-                    Cancel
-                </button>
-                <button
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-                    onClick={handleSubmit}
-                >
-                    Add Product
-                </button>
+
+
+
+                <button className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded mr-2"  onClick={onClose} > Cancel </button>
+                <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"onClick={handleSubmit}> Add Product</button>
             </div>
         </div>
     </div>

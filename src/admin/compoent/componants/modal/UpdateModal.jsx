@@ -25,49 +25,29 @@ const UpdateModal = ({ show, onClose, product, onUpdate }) => {
         <div>
           <label className="block mb-2">
             URL:
-            <input
-              type="text"
-              value={imageSrc}
-              onChange={(e) => setImageSrc(e.target.value)}
-              className="border p-2 w-full"
-            />
+            <input type="text" value={imageSrc} onChange={(e) => setImageSrc(e.target.value)} className="border p-2 w-full" />
           </label>
+          
           <label className="block mb-2">
             <title></title>:
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="border p-2 w-full"
-            />
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="border p-2 w-full" />
           </label>
           <label className="block mb-2">
             Price:
-            <input
-              type="text"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              className="border p-2 w-full"
-            />
+            <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} className="border p-2 w-full" />
           </label>
         </div>
+
+
         <div className="mt-4 flex justify-end">
-          <button
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-            onClick={handleSubmit}
-          >
-            Update
-          </button>
-          <button
-            className="ml-2 bg-gray-500 text-white px-4 py-2 rounded"
-            onClick={onClose}
-          >
-            Close
-          </button>
+          <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={handleSubmit}> Update</button>
+          <button className="ml-2 bg-gray-500 text-white px-4 py-2 rounded" onClick={onClose} > Close</button>
         </div>
       </div>
     </div>
   );
 };
+
+
 
 export default UpdateModal;
