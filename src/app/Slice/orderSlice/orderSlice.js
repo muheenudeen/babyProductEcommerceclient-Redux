@@ -18,10 +18,10 @@ const orderSlice = createSlice ({
     reducers:{
 
         addOrder: (state, action) => {
-            state.order.push(action.payload); // Add the new order to the existing orders
+            state.order.push(action.payload);
         },
         clearOrders: (state) => {
-            state.order = []; // Clear all orders
+            state.order = [];
         },
     },
     extraReducers: (builder)=>{
@@ -30,7 +30,7 @@ const orderSlice = createSlice ({
             state.status = 'loading';
         })
         .addCase(fetchOrders.fulfilled, (state,action)=>{
-            state.status('succeeded')
+            state.status =('succeeded')
             state.order = action.payload;
         })
         .addCase(fetchOrders.rejected, (state) =>{

@@ -12,10 +12,10 @@ const Navbar = ({ onSearch }) => {
   const navigate = useNavigate();
 
   const { isLoggedIn, user } = useSelector((state) => state.auth);
-  const cart = useSelector((state) => state.cart?.cart || []); // Changed 'items' to 'cart' to align with slice
+  const cart = useSelector((state) => state.cart?.cart || []);
 
-  const totalCartQuantity = cart.reduce((total, item) => total + item.quantity, 0);
-
+  // const totalCartQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+  const totalCartQuantity = cart.length
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -28,6 +28,9 @@ const Navbar = ({ onSearch }) => {
   const openModal = () => {
     setIsModalOpen(true);
   };
+
+
+
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -52,14 +55,7 @@ const Navbar = ({ onSearch }) => {
             </ul>
           </div>
           <div className="flex items-center space-x-6">
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchItem}
-              className="hidden md:block p-2 rounded bg-white text-grey"
-              onChange={handleSearchChange}
-              onFocus={() => navigate('/shop')}
-            />
+            <input type="text" placeholder="Search..." value={searchItem} className="hidden md:block p-2 rounded bg-white text-grey" onChange={handleSearchChange} onFocus={() => navigate('/shop')}/>
             <select onChange={handleSearchChange} onFocus={() => navigate('/shop')} className="hidden md:block p-2 rounded bg-white text-grey">
               <option value="">All</option>
               <option value="dress">Dress</option>
@@ -84,12 +80,7 @@ const Navbar = ({ onSearch }) => {
             </Link>
 
             {isLoggedIn ? (
-              <img
-                src={user?.profilePhoto || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWQNJtFsdtSeo-E-UPrgxU8qkQGISaSjCjXg&s"}
-                alt="Profile"
-                className="w-10 h-10 rounded-full cursor-pointer"
-                onClick={openModal}
-              />
+              <img src={user?.profilePhoto || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWQNJtFsdtSeo-E-UPrgxU8qkQGISaSjCjXg&s"} alt="Profile" className="w-10 h-10 rounded-full cursor-pointer" onClick={openModal}/>
             ) : (
               <Link to="/login">
                 <button className="bg-cyan-500 text-white rounded-full py-2 px-4 hover:bg-cyan-600">
@@ -117,13 +108,7 @@ const Navbar = ({ onSearch }) => {
               ) : (
                 <li><Link to="/login" className="block text-grey">Login</Link></li>
               )}
-              <input
-                type="text"
-                placeholder="Search..."
-                value={searchItem}
-                className="block p-2 rounded bg-grey text-grey"
-                onChange={handleSearchChange}
-              />
+              <input type="text" placeholder="Search..." value={searchItem} className="block p-2 rounded bg-grey text-grey" onChange={handleSearchChange} />
               <select onChange={handleSearchChange} className="block p-2 rounded bg-white text-grey">
                 <option value="">All</option>
                 <option value="dress">Dress</option>
@@ -139,26 +124,15 @@ const Navbar = ({ onSearch }) => {
           <div className="bg-white p-6 rounded-lg">
             <h2 className="text-xl mb-4">Confirm Logout</h2>
             <div className="flex items-center space-x-4">
-              <img
-                src={user?.profilePhoto || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWQNJtFsdtSeo-E-UPrgxU8qkQGISaSjCjXg&s"}
-                alt="Profile"
-                className="w-10 h-10 rounded-full"
-              />
+              <img src={user?.profilePhoto || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWQNJtFsdtSeo-E-UPrgxU8qkQGISaSjCjXg&s"} alt="Profile" className="w-10 h-10 rounded-full"/>
               <span>{user?.name || "Thank you"}</span>
             </div>
             <div className="mt-6 flex justify-end space-x-4">
               <button
-                onClick={closeModal}
-                className="bg-gray-500 text-white rounded-full py-2 px-4 hover:bg-gray-600"
-              >
-                Cancel
+                onClick={closeModal} className="bg-gray-500 text-white rounded-full py-2 px-4 hover:bg-gray-600"> Cancel
               </button>
-              <button
-                onClick={handleLogout}
-                className="bg-red-500 text-white rounded-full py-2 px-4 hover:bg-red-600"
-              >
-                Logout
-              </button>
+              <button onClick={handleLogout}
+                className="bg-red-500 text-white rounded-full py-2 px-4 hover:bg-red-600" >Logout </button>
             </div>
           </div>
         </div>

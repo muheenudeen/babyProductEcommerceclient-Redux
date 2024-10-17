@@ -30,11 +30,8 @@ const authSlice = createSlice({
 
 import { createSelector } from 'reselect';
 
-// Memoized selector for cart items
 export const selectCartItems = createSelector(
-  (state) => state.cart?.items || [],
-  (items) => items
-);
+  (state) => state.cart?.items || [],(items) => items);
 
 // Memoized selector for authentication state
 export const selectAuth = createSelector(

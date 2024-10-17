@@ -1,10 +1,9 @@
-
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../../navbar/NavbarLink";
 import Footer from "../../../Pages/footers/Footer";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchCart } from "../../../../app/Slice/cartSlice/cartSlice";
+// import { fetchCart } from "../../../../app/Slice/cartSlice/cartSlice";
 
 import { removeFromCart, incrementQuantity, decrementQuantity } from "../../../../app/Slice/cartSlice/cartSlice";
 
@@ -13,21 +12,21 @@ const Carts = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const userId = localStorage.getItem("userId"); // Assuming you have userId in localStorage
-    if (userId) {
-      dispatch(fetchCart(userId));
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const userId = localStorage.getItem("userId");
+  //   if (userId) {
+  //     dispatch(fetchCart(userId));
+  //   }
+  // }, [dispatch]);
 
   const totalAmount = cart.reduce(
-    (total, product) => total + product.price * product.quantity,
-    0
-  );
+    (total, product) => total + product.productId.price * product.quantity,0);
 
   const handleIncrement = (productId) => {
     dispatch(incrementQuantity(productId));
+    
   };
+  
 
   const handleDecrement = (productId) => {
     dispatch(decrementQuantity(productId));
@@ -42,6 +41,8 @@ const Carts = () => {
       state: { amount: totalAmount, orderDetails: cart },
     });
   };
+console.log('heloo');
+
 
   return (
     <>
@@ -54,74 +55,45 @@ const Carts = () => {
               <h2 className="font-semibold text-2xl">{cart.length} Items</h2>
             </div>
             <div className="flex mt-10 mb-5">
-              <h3 className="font-semibold text-gray-600 text-xs uppercase w-2/5">
-                Product Details
-              </h3>
-              <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">
-                Quantity
-              </h3>
-              <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">
-                Price
-              </h3>
-              <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">
-                Total
-              </h3>
+              <h3 className="font-semibold text-gray-600 text-xs uppercase w-2/5">Product Details</h3>
+              <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center"> Quantity</h3>
+              <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center"> Price</h3>
+              <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center"> Total</h3>
             </div>
             {cart.map((product) => (
-              <div
-                key={product.id}
-                className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5"
-              >
-                <div className="flex w-2/5">
-                  <div className="w-20">
-                    <img
-                      className="h-24"
-                      src={product.imageSrc}
-                      alt={product.description}
-                    />
-                  </div>
-                  <div className="flex flex-col justify-between ml-4 flex-grow">
-                    <span className="font-bold text-sm">
-                      {product.title}
-                    </span>
-                    <span className="text-red-500 text-xs">{product.description}</span>
-                    <button
-                      onClick={() => handleRemove(product.id)}
-                      className="font-semibold hover:text-red-500 text-gray-500 text-xs"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                </div>
-                <div className="flex justify-center w-1/5">
-                  <button onClick={() => handleDecrement(product.id)}>
-                    <svg
-                      className="fill-current text-gray-600 w-3"
-                      viewBox="0 0 448 512"
-                    >
+
+  <div key={product.id} className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
+    {console.log(product)
+    }
+    <div className="flex w-2/5">
+      <div className="w-20">
+        <img className="h-24" src={product.productId.imageSrc} alt={product.productId.description} />
+      </div>
+      <div className="flex flex-col justify-between ml-4 flex-grow">
+        <span className="font-bold text-sm">{product.productId.title}</span>
+        <span className="text-red-500 text-xs">{product.productId.description}</span>
+        <button onClick={() => handleRemove(product.productId._id)} className="font-semibold hover:text-red-500 text-gray-500 text-xs">
+          Remove
+        </button>
+        </div>
+       </div>
+   <div className="flex justify-center w-1/5"><button onClick={() => handleDecrement(product)}> 
+                  <svg className="fill-current text-gray-600 w-3" viewBox="0 0 448 512"  >
                       <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32C448 222.3 433.7 208 416 208z" />
                     </svg>
                   </button>
-                  <input
-                    className="mx-2 border text-center w-8"
-                    type="text"
-                    value={product.quantity}
-                    readOnly
-                  />
-                  <button onClick={() => handleIncrement(product.id)}>
-                    <svg
-                      className="fill-current text-gray-600 w-3"
-                      viewBox="0 0 448 512"
-                    >
+                  <input className="mx-2 border text-center w-8" type="text" value={product.quantity} readOnly />
+                  <button onClick={() => handleIncrement(product)}>
+                    <svg className="fill-current text-gray-600 w-3" viewBox="0 0 448 512">
                       <path d="M416 208H272V64c0-17.67-14.33-32-32-32H208c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32C448 222.3 433.7 208 416 208z" />
                     </svg>
                   </button>
                 </div>
                 <span className="text-center w-1/5 font-semibold text-sm">
-                  ${product.price}
+                  ${product.productId.price}
                 </span>
                 <span className="text-center w-1/5 font-semibold text-sm">
-                  ${product.price * product.quantity}
+                  ${product.productId.price * product.quantity}
                 </span>
               </div>
             ))}
