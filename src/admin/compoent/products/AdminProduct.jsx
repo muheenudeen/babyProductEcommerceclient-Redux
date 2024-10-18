@@ -23,7 +23,6 @@ const AdminProduct = () => {
             });
     }, []);
 
-    // Delete product
     const handleDelete = (productId) => {
         api.delete(`/admin/products/${productId}`)
             .then(response => {
@@ -37,20 +36,17 @@ const AdminProduct = () => {
             .catch(error => console.error("Error deleting product:", error));
     };
 
-    // Show update modal
     const handleUpdate = (product) => {
         setSelectedProduct(product);
         setShowUpdateModal(true);
     };
 
-    // Add product
     const handleAddProduct = (newProduct) => {
         api.post("/admin/products", newProduct)
             .then(response => {
                 if (response.data.success) {
                     setProducts([...products, response.data.newProduct]);
                     alert('Product added successfully');
-                    // setShowAddModal(false);
                 } else {
                     alert('Failed to add product');
                 }
@@ -58,7 +54,6 @@ const AdminProduct = () => {
             .catch(error => console.error("Error adding product:", error));
     };
 
-    // Update product
     const handleUpdateProduct = (updatedProduct) => {
         api.put(`/admin/products/${updatedProduct._id}`, updatedProduct)
             .then(response => {

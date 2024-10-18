@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 
 const INITIAL_STATE = {
-  cart: JSON.parse(localStorage.getItem("cart")) || [],
+  cart:[],
   totalAmount: 0,
 };
 
@@ -24,7 +24,7 @@ export const settingCart = createAsyncThunk(
 
 
       const res = await api.get(`/user/cart/${id}`);
-      return res.data?.data?.products;
+      return res.data.data.products;
     } catch (error) {
       console.error("Something went wrong!", error.message);
       return rejectWithValue(error.message);
@@ -61,7 +61,7 @@ export const addToCart = createAsyncThunk(
       return res.data.data.products;
     } catch (error) {
       console.error("Something went wrong!", error.message);
-      toast.error("Failed to add product to cart.");
+      toast.error("product alredy added");
       throw error;
     }
   }
@@ -85,11 +85,11 @@ export const removeFromCart = createAsyncThunk(
 
       if (deleteProduct) {
         const res = await api.get(`/user/cart/${id}`);
-        toast.success("Product removed from cart!");
+      
         return res.data.data.products;
       }
     } catch (error) {
-      toast.error("Failed to remove product from cart.");
+      toast.error("something went wrong!");
       throw error;
     }
   }
@@ -118,31 +118,29 @@ export const incrementQuantity = createAsyncThunk(
     }
   }
 );
-
 export const decrementQuantity = createAsyncThunk(
   "cartSlice/decrementQuantity",
   async (product, { getState }) => {
-    console.log(product.quantity);
-    
     try {
       const id = localStorage.getItem("id");
-      if(product.quantity>=2){
+
+      if (product.quantity > 1) {
         await api.post(`/user/cart/${id}`, {
           productId: product.productId._id,
           action: "decrement",
-          quantity: -1,
         });
-      }
       
+      }
 
       const res = await api.get(`/user/cart/${id}`);
       return res.data.data.products;
     } catch (error) {
-      console.log("something went wrong!");
+      console.log("Something went wrong!", error);
       throw error;
     }
   }
 );
+
 
 const cartSlice = createSlice({
   name: "cartSlice",
@@ -151,13 +149,9 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.cart = [];
       state.totalAmount = 0;
-      localStorage.removeItem("cart");
+     
     },
-    // calculateTotal: (state) => {
-    //   state.totalAmount = state.cart.reduce((total, item) => {
-    //     return total + item.productId.price * item.quantity;
-    //   }, 0);
-    // },
+    
   },
   extraReducers: (builder) => {
     builder
@@ -169,24 +163,19 @@ const cartSlice = createSlice({
       })
       .addCase(settingCart.fulfilled, (state, action) => {
         state.cart = action.payload;
-        localStorage.setItem("cart", JSON.stringify(state.cart));
         console.log("Cart updated successfully");
       })
       .addCase(addToCart.fulfilled, (state, action) => {
         state.cart = action.payload;
-        localStorage.setItem("cart", JSON.stringify(state.cart));
       })
       .addCase(removeFromCart.fulfilled, (state, action) => {
         state.cart = action.payload;
-        localStorage.setItem("cart", JSON.stringify(state.cart));
       })
       .addCase(incrementQuantity.fulfilled, (state, action) => {
         state.cart = action.payload;
-        localStorage.setItem("cart", JSON.stringify(state.cart));
       })
       .addCase(decrementQuantity.fulfilled, (state, action) => {
         state.cart = action.payload;
-        localStorage.setItem("cart", JSON.stringify(state.cart));
       });
   },
 });

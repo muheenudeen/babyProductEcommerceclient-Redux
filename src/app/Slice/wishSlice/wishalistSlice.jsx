@@ -19,21 +19,6 @@ export const settingWishList = createAsyncThunk(
   }
 );
 
-// export const clearWishListAsync = createAsyncThunk(
-//   "wishlists/clearWishListAsync",
-//   async (_, { rejectWithValue, dispatch }) => {
-//     try {
-//       const id = localStorage.getItem("id");
-//       await api.delete(`/user/wishlists/${id}`);
-//       dispatch(settingWishList()); // Fetch updated wishlist after clearing
-//       toast.success("Wishlist cleared successfully");
-//     } catch (error) {
-//       toast.error("Failed to clear wishlist");
-//       return rejectWithValue("Failed to clear wishlist");
-//     }
-//   }
-// );
-
 export const removeFromWishListAsync = createAsyncThunk(
   "wishlists/removeFromWishListAsync",
   async (productId, { rejectWithValue, dispatch }) => {
@@ -54,7 +39,7 @@ export const removeFromWishListAsync = createAsyncThunk(
   }
 );
 
-   //add
+   
 
 export const addToWishListAsync = createAsyncThunk(
   "wishlists/addToWishListAsync",
@@ -65,7 +50,7 @@ export const addToWishListAsync = createAsyncThunk(
       dispatch(settingWishList());
       return product;
     } catch (error) {
-      if (error.response?.status === 400) {
+      if (error.response.status === 400) {
         toast.error("Product already in wishlist");
       } else {
         toast.error("Failed to add to wishlist");

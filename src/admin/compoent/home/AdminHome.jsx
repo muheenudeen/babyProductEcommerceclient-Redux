@@ -6,6 +6,7 @@ import api from '../../../../utis/axios';
 function AdminHome() {
   const [products, setProducts] = useState([]);
   const [users, setUsers] = useState([]);
+  const [orders,setorders]=useState([])
 
   useEffect(() => {
     api.get("/user/products")
@@ -35,18 +36,42 @@ function AdminHome() {
       });
   }, []);
 
+
+  useEffect(() => {
+    api.get("/admin/orders")
+      .then(res => {
+        if (res.data.success) {
+          setorders(res.data.data);
+        } else {
+          console.error("Error fetching users:", res.data.message);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }, []);
+
+
   return (
     <>
       <Admin />
       <div className="bg-white min-h-screen flex flex-col items-center p-12">
         <div className="w-full max-w-4xl">
-          {/* Total Users Section */}
+    
+
+
           <div className="bg-blue-100 p-8 mb-12 rounded shadow-md hover:shadow-lg transition-shadow">
             <p className="text-xl font-semibold text-center">Total Users: {users.length}</p>
           </div>
-          {/* Total Products Section */}
-          <div className="bg-green-100 p-8 mb-4 rounded shadow-md hover:shadow-lg transition-shadow">
+        
+
+
+          <div className="bg-green-100 p-8 mb-12 rounded shadow-md hover:shadow-lg transition-shadow">
             <p className="text-xl font-semibold text-center">Total Products: {products.length}</p>
+          </div>
+
+          <div className="bg-red-100 p-8 mb-4 rounded shadow-md hover:shadow-lg transition-shadow">
+            <p className="text-xl font-semibold text-center">Total orders: {orders.length}</p>
           </div>
         </div>
       </div>

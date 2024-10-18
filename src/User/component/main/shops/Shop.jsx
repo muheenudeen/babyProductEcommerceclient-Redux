@@ -3,7 +3,7 @@ import Navbar from "../../../navbar/NavbarLink";
 import Footer from "../../../Pages/footers/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../../../app/Slice/cartSlice/cartSlice";
-import { settingWishList, addToWishListAsync, removeFromWishListAsync } from "../../../../app/Slice/wishSlice/wishalistSlice";
+import { settingWishList,addToWishListAsync, removeFromWishListAsync } from "../../../../app/Slice/wishSlice/wishalistSlice";
 import WishalistModal from "../../../../admin/compoent/componants/modal/wishalistModal";
 import api from "../../../../../utis/axios";
 import { toast } from "react-toastify";
@@ -39,10 +39,7 @@ function Shop() {
     }
   }, [dispatch, isLoggedIn]);
 
-  // useEffect(() => {
-  //   dispatch(calculateTotal());
-  // }, [cart, dispatch]);
-
+ 
      const handleSearchChange = (searchValue) => {
     setSearchItem(searchValue);
   };
