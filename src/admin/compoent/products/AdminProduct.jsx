@@ -11,7 +11,6 @@ const AdminProduct = () => {
     const [showAddModal, setShowAddModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
 
-    // Fetch products
     useEffect(() => {
         api.get("/user/products")
             .then((res) => {

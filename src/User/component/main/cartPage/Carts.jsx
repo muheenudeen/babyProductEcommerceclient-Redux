@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart, incrementQuantity, decrementQuantity,settingCart } from "../../../../app/Slice/cartSlice/cartSlice";
 import { useEffect } from "react";
 
+
 const Carts = () => {
   const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
@@ -19,8 +20,9 @@ const Carts = () => {
   
   }, [dispatch,id]);
 
-  const totalAmount = cart.reduce(
-    (total, product) => total + product.productId.price * product.quantity,0);
+
+
+  const totalAmount = cart.reduce((total, product) => total + product.productId.price * product.quantity,0);
 
   const handleIncrement = (productId) => {
     dispatch(incrementQuantity(productId));
@@ -31,9 +33,7 @@ const Carts = () => {
   const handleDecrement = (productId) => {
     dispatch(decrementQuantity(productId));
   };
-  
-
-  const handleRemove = (productId) => {
+const handleRemove = (productId) => {
     dispatch(removeFromCart(productId));
   };
 

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../../../app/Slice/authSlice/authSlice';
+import toast from 'react-hot-toast';
 //  import { AuthContext } from '../../../User/AuthContext/AuthContext';
 
 
@@ -14,6 +15,7 @@ const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn)
 
 const handleLogout = () =>{
   dispatch(logout())
+  toast.success("click once more")
 }
   return (
     <div className="w-full bg-amber-100 shadow-md">
