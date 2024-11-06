@@ -1,7 +1,7 @@
 
 import axios from "axios";
 
-const baseUrl = "http://localhost:3002/api";
+const baseUrl = "https://baby-product-ecommerce-server.onrender.com/api";
 
 const api = axios.create({
   baseURL: baseUrl,
