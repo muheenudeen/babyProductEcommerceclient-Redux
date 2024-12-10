@@ -89,8 +89,9 @@ export const login = (email, password, navigate) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
   localStorage.removeItem("token");
-  localStorage.removeItem("id");
-  
+  localStorage.removeItem("id"); 
+    toast.success('Logout successful');
+
   dispatch(logoutSuccess());
 
  

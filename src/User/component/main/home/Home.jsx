@@ -1,9 +1,11 @@
-
 import React, { useEffect, useState } from 'react';
 import Navbar from '../../../navbar/NavbarLink';
 import Footer from '../../../Pages/footers/Footer';
 import api from '../../../../../utis/axios';
 import HomeModal from '../../../../admin/compoent/componants/modal/homeModal';
+import Slider from "react-slick"; // Import react-slick for carousel functionality
+import "slick-carousel/slick/slick.css"; // Slick CSS
+import "slick-carousel/slick/slick-theme.css"; // Slick Theme CSS
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -34,32 +36,53 @@ function Home() {
     setSelectedProduct(null);
   };
 
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  };
+
   return (
     <>
       <Navbar />
 
-      <div className="flex flex-col lg:flex-row h-screen mt-1 bg-stone-100">
-        <div className="flex-1 flex flex-col justify-center items-center lg:items-start p-8">
-          <h1 className="text-4xl lg:text-7xl font-bold mb-10 italic hover:not-italic text-orange-900">
-            Baby Essential Fashion & Nursery
-          </h1>
-          <p className="text-xl">Discover the latest trends in baby fashion and nursery essentials.</p>
-        </div>
-        <div className="flex-1">
-          <img
-            src="https://w0.peakpx.com/wallpaper/586/490/HD-wallpaper-cute-baby-cute-baby.jpg"
-            alt="Baby Fashion"
-            className="w-full"
-            style={{ height: '90vh' }}
-          />
-        </div>
+      {/* Banner Section */}
+      <div className="h-150px bg-stone-100 mt-3">
+        <Slider {...sliderSettings} className="h-full">
+          <div className="h-full">
+            <img
+              src="https://www.menmoms.in/cdn/shop/files/Baby-Fashion-Clothes-Category-Page-Banner-Desktop.jpg?v=1727780797"
+              alt="Baby Fashion"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="h-full">
+            <img
+              src="https://www.menmoms.in/cdn/shop/files/Sale-Category-Page-Banner-Desktop.jpg?v=1727779570"
+              alt="Baby Sale"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="h-full">
+            <img
+              src="https://www.menmoms.in/cdn/shop/files/The_biggest_Festive_Sale_-1st-banner_12_nov.jpg?v=1731399204&width=1500"
+              alt="Baby Sale 70% Off"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </Slider>
       </div>
 
+      {/* Product Grid Section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-stone-100">
         {products.map((product) => (
           <div
             key={product._id}
-            className="p-4 bg-white rounded-lg shadow-lg"
+            className="p-4 bg-white rounded-lg shadow-lg transition-transform duration-300 hover:scale-105"
             onClick={() => openModal(product)}
           >
             <img
@@ -75,6 +98,7 @@ function Home() {
         ))}
       </div>
 
+      {/* Modal Section */}
       <HomeModal
         isOpen={isModalOpen}
         onClose={closeModal}
