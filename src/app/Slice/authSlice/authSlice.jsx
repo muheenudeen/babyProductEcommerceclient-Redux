@@ -8,8 +8,6 @@ const initialState = {
   userId: localStorage.getItem("id") || "",
 };
 
-
-
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -45,8 +43,6 @@ export const selectAuth = createSelector(
   (state) => state.auth,
   (auth) => auth
 );
-
-
 
 
 export const { loginSuccess, logoutSuccess } = authSlice.actions;

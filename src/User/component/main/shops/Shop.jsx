@@ -6,8 +6,7 @@ import { addToCart } from "../../../../app/Slice/cartSlice/cartSlice";
 import { settingWishList,addToWishListAsync, removeFromWishListAsync } from "../../../../app/Slice/wishSlice/wishalistSlice";
 import WishalistModal from "../../../../admin/compoent/componants/modal/wishalistModal";
 import api from "../../../../../utis/axios";
-import { toast } from "react-toastify";
-
+import toast from "react-hot-toast";
 
 
 function Shop() {
@@ -32,6 +31,7 @@ function Shop() {
       })
 .catch((error) => {
         console.error("Error fetching products", error);
+        toast.error("Error fetching products", error)
       });
 
     if (isLoggedIn) {
